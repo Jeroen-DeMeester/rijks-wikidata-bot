@@ -1,0 +1,21 @@
+# Environment variables (secret keys)
+.env
+
+# Python virtual environment
+venv/
+.env/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code settings (optioneel)
+.vscode/
+
+# Logs
+*.log
+
+# Mac / Windows rommel
+.DS_Store
+Thumbs.db
