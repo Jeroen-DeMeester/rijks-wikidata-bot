@@ -11,5 +11,5 @@ CONSUMER_SECRET = os.getenv("CONSUMER_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 ACCESS_SECRET = os.getenv("ACCESS_SECRET")
 
-# print key as test
-print(CONSUMER_KEY)
+# print Hello world as test
+print('Hello world')
