@@ -8,6 +8,7 @@ This Python project automates the addition of **Rijksmuseum IDs** (property `P13
 - [Requirements](#requirements)  
 - [Setup](#setup)  
 - [CSV Format](#csv-format)  
+- [Test Connection (optional but recommended)](#test-connection-optional-but-recommended)  
 - [Usage](#usage)  
 - [Logging](#logging)  
 - [Best Practices](#best-practices)  
@@ -104,6 +105,18 @@ The `uri` column must start with `https://id.rijksmuseum.nl/200...`.
 Only the numeric part after `nl/` will be stored as the property value. Rows with missing QID or invalid URI are skipped automatically.
 
 A demo file `rijks_uris_demo.csv` is included in this repository as an example.
+
+## Test Connection (optional but recommended)
+
+Before running the full batch, you can verify that Pywikibot is correctly configured and can connect to Wikidata.
+
+Run the script:
+
+```bash
+python test-connection.py
+```
+
+If the configuration is correct, the script will confirm a successful connection to the target environment (test or live), based on your `user-config.py`.
 
 ## Usage
 
