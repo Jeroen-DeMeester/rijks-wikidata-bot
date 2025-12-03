@@ -1,3 +1,1 @@
-requests
-requests-oauthlib
-python-dotenv
+pywikibot>=10.7.2

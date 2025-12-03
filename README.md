@@ -103,9 +103,13 @@ The `uri` column must start with `https://id.rijksmuseum.nl/200...`.
 
 Only the numeric part after `nl/` will be stored as the property value. Rows with missing QID or invalid URI are skipped automatically.
 
+A demo file `rijks_uris_demo.csv` is included in this repository as an example.
+
 ## Usage
 
 Ensure `user-config.py` points to the correct environment (wikidata or test).
+
+Replace the contents of `rijks_uris.csv` with your own data, based on the format shown in `rijks_uris_demo.csv`.
 
 Run the script:
 

@@ -1,21 +1,23 @@
-# Environment variables (secret keys)
-.env
-
-# Python virtual environment
-venv/
-.env/
+# Virtual env
 .venv/
+
+# Pywikibot
+apicache/
+throttle.ctrl
+*.lwp
+user-config.py
+
+# Logs & output
+logs/
+*.log
+output_*.csv
+
+# Input data
+rijks_uris.csv
 
 # Python cache
 __pycache__/
 *.pyc
 
-# VS Code settings (optioneel)
-.vscode/
-
-# Logs
-*.log
-
-# Mac / Windows rommel
+# OS junk
 .DS_Store
-Thumbs.db
