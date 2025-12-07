@@ -81,7 +81,14 @@ with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
 
             # Skip if the property already exists
             if has_property(item, PROPERTY):
-                logging.info(f"{qid}: P13234 already exists — skipped")
+                if any(
+        				claim.getTarget() != rijks_id and
+        				claim.getRank() != 'deprecated'
+        			for claim in item.claims[PROPERTY]
+        		):
+			        logging.warning(f"{qid}: {PROPERTY} has a different value than {rijks_id}")
+                else:
+                    logging.info(f"{qid}: {PROPERTY} already exists — skipped")
                 continue
 
             # Create a new claim for the property
@@ -90,7 +97,7 @@ with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
 
             # Real write according to user-config.py settings
             item.addClaim(claim, summary=f"Add {PROPERTY} (Rijksmuseum ID) from CSV")
-            logging.info(f"{qid}: ✅ P13234 set to {rijks_id}")
+            logging.info(f"{qid}: ✅ {PROPERTY} set to {rijks_id}")
             success_count += 1
 
         except Exception as e:
