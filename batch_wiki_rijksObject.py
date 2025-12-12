@@ -86,7 +86,7 @@ with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
         				claim.getRank() != 'deprecated'
         			for claim in item.claims[PROPERTY]
         		):
-			        logging.warning(f"{qid}: {PROPERTY} has a different value than {rijks_id}")
+                    logging.warning(f"{qid}: {PROPERTY} has a different value than {rijks_id}")
                 else:
                     logging.info(f"{qid}: {PROPERTY} already exists — skipped")
                 continue
