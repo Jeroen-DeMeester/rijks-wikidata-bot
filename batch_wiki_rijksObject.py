@@ -96,8 +96,8 @@ with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
             claim.setTarget(rijks_id)  # Set the claim target to the Rijksmuseum ID
 
             # Real write according to user-config.py settings
-            item.addClaim(claim, summary=f"Add {PROPERTY} (Rijksmuseum ID) from CSV")
-            logging.info(f"{qid}: ✅ {PROPERTY} set to {rijks_id}")
+            item.addClaim(claim)
+            logging.info(f"{qid}: ✅ P13234 set to {rijks_id}")
             success_count += 1
 
         except Exception as e:
