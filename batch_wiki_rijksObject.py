@@ -44,8 +44,7 @@ def has_property(item, pid):
     # Returns True if the item already has the property (claim) defined
     return pid in item.claims
 
-# Open the CSV file for reading
-# Using utf-8 encoding to avoid encoding issues
+# Open the CSV file for reading, using utf-8 encoding to avoid encoding issues
 with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)  # Treat first row as header, map columns to names
     rows = list(reader)  # Convert iterator to list for easier counting
@@ -56,6 +55,7 @@ with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
     for row in rows:
         qid = row.get("qid", "").strip()  # Get QID, remove leading/trailing spaces
         uri = row.get("uri", "").strip()  # Get URI, remove leading/trailing spaces
+        objectnumber = row.get("objectnumber", "").strip() # Get objectnumber
 
         # Skip rows with missing QID or URI
         if not qid or not uri:
@@ -99,6 +99,24 @@ with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
             item.addClaim(claim)
             logging.info(f"{qid}: ✅ P13234 set to {rijks_id}")
             success_count += 1
+
+            # add P195 (collection = Rijksmuseum)
+            if not has_property(item, "P195"):
+                claim_collection = pywikibot.Claim(repo, "P195")
+                claim_collection.setTarget(pywikibot.ItemPage(repo, "Q190804"))  # Rijksmuseum QID
+                item.addClaim(claim_collection)            
+
+            # add P217 (objectnumber, if present in csv)
+            if objectnumber and not has_property(item, "P217"):
+                claim_inventory = pywikibot.Claim(repo, "P217")
+                claim_inventory.setTarget(objectnumber)
+                item.addClaim(claim_inventory)
+
+            # add P276: (location = Rijksmuseum)
+            if not has_property(item, "P276"):
+                claim_location = pywikibot.Claim(repo, "P276")
+                claim_location.setTarget(pywikibot.ItemPage(repo, "Q190804"))  # Rijksmuseum QID
+                item.addClaim(claim_location)
 
         except Exception as e:
             # Catch and log any exceptions while processing the item
