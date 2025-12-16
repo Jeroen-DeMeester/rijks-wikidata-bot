@@ -1,6 +1,6 @@
-qid,uri
-Q242998,https://id.rijksmuseum.nl/200122652
-Q242999,https://id.rijksmuseum.nl/200730115
-Q243000,https://id.rijksmuseum.nl/20027891
-Q243001,https://id.rijksmuseum.nl/200312588
-Q243002,https://id.rijksmuseum.nl/200109350
+qid,uri,objectnumber
+Q242998,https://id.rijksmuseum.nl/200122652,RP-P-1905-2499
+Q242999,https://id.rijksmuseum.nl/200730115,SK-A-5053
+Q243000,https://id.rijksmuseum.nl/20027891,SK-A-3919
+Q243001,https://id.rijksmuseum.nl/200312588,RP-T-1953-229
+Q243002,https://id.rijksmuseum.nl/200109350,SK-C-374

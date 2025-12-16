@@ -1,6 +1,6 @@
 # Rijksmuseum Uploader for Wikidata
 
-This Python project automates the addition of **Rijksmuseum IDs** (property `P13234`) to Wikidata items from a CSV file. It leverages [Pywikibot](https://www.mediawiki.org/wiki/Manual:Pywikibot) to interact with Wikidata safely.
+This Python project automates the addition of **Rijksmuseum IDs** (property `P13234`) to Wikidata items from a CSV file. Adding the Rijksmuseum ID is the primary purpose of this tool. It leverages [Pywikibot](https://www.mediawiki.org/wiki/Manual:Pywikibot) to interact with Wikidata safely and can add a small set of related statements, when absent, to meet the constraints and modelling expectations associated with the Rijksmuseum ID property.
 
 ## Table of Contents
 
@@ -17,18 +17,32 @@ This Python project automates the addition of **Rijksmuseum IDs** (property `P13
 
 ## Project Overview
 
-The goal of this project is to ensure that Wikidata items for artworks or objects in the Rijksmuseum collection have the correct Rijksmuseum ID (`P13234`). The script reads a CSV file containing:
+The goal of this project is to ensure that Wikidata items for artworks or objects in the Rijksmuseum collection have a correct and complete Rijksmuseum ID (`P13234`).
+
+In addition to adding the Rijksmuseum ID (`P13234`) itself, the script can add a small number of closely related statements **only when they are missing**. These include:
+
+- `P195` (collection)  
+- `P217` (inventory number / Rijksmuseum object number)  
+- `P276` (location) 
+
+ Adding these related statements helps ensure items meet the modelling expectations and constraints associated with the Rijksmuseum ID property, without overwriting existing data.
+
+ The script reads a CSV file containing:
 
 - `qid`: Wikidata item ID (e.g., `Q100905723`)  
 - `uri`: Rijksmuseum URI (e.g., `https://id.rijksmuseum.nl/200122652`)  
+- `objectnumber`: Rijksmuseum objectnumber (e.g., `RP-P-1905-2499`, used only if `P217` is missing)
 
-The script will:
+From this data, the script will:
 
 1. Validate the URI format (`https://id.rijksmuseum.nl/200...`)  
 2. Skip rows with missing data or invalid URIs  
-3. Check if the item already has `P13234`  
-4. Add the claim if missing  
-5. Log successes and failures to a timestamped log file  
+3. Add Rijksmuseum ID (`P13234`) if missing (primary action)
+4. Add collection (`P195`) = Rijksmuseum if missing
+5. Add inventory number (`P217`) if missing
+6. Add location (`P276`) = Rijksmuseum if missing
+7. Avoid overwriting or duplicating any existing statements
+8. Log successes and failures to a timestamped log file  
 
 ## Requirements
 
@@ -90,12 +104,12 @@ Make sure you have permission to run a bot on Wikidata before performing live ed
 
 ## CSV Format
 
-The input CSV should have **two columns**:
+The input CSV should have **three columns**:
 
 ```bash
-qid,uri
-Q100905723,https://id.rijksmuseum.nl/200122652
-Q102304818,https://id.rijksmuseum.nl/200122530
+qid,uri,objectnumber
+Q100905723,https://id.rijksmuseum.nl/200122652,RP-P-1905-2499
+Q102304818,https://id.rijksmuseum.nl/200122530,RP-P-1961-793
 ```
 
 The `qid` column must contain the Wikidata QID.
@@ -103,6 +117,8 @@ The `qid` column must contain the Wikidata QID.
 The `uri` column must start with `https://id.rijksmuseum.nl/200...`.
 
 Only the numeric part after `nl/` will be stored as the property value. Rows with missing QID or invalid URI are skipped automatically.
+
+The `objectnumber` column must contain the Rijksmuseum object number.
 
 A demo file `rijks_uris_demo.csv` is included in this repository as an example.
 
@@ -132,6 +148,8 @@ python batch_wiki_rijksObject.py
 
 The script will add `P13234` claims for valid rows in the CSV.
 
+Related statements (`P195` - collection, `P217` - inventory number, `P276` - location) are added **only when absent**, to support correct modelling and compliance with the expectations of the Rijksmuseum ID property on Wikidata.
+
 ## Logging
 
 All logs are saved in the logs/ directory with a timestamp:
@@ -155,6 +173,9 @@ Each run logs:
 - **Check existing claims:** The script automatically skips items that already have the `P13234` property to avoid duplicates.
 
 - **Rate limiting:** Pywikibot respects Wikidata's server limits (maxlag) out of the box. No manual `time.sleep` is needed for normal usage.
+
+- **Primary focus**: This bot exists to add and maintain Rijksmuseum IDs (`P13234`). All other statements are secondary and supportive.
+
 
 ## Troubleshooting
 
