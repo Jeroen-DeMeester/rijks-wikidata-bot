@@ -12,8 +12,8 @@ This Python project automates the addition of **Rijksmuseum IDs** (property `P13
 - [Usage](#usage)  
 - [Logging](#logging)  
 - [Best Practices](#best-practices)  
-- [Troubleshooting](#troubleshooting)  
-
+- [Troubleshooting](#troubleshooting) 
+- [Learn more about RijksBot](#learn-more-about-rijksbot) 
 
 ## Project Overview
 
@@ -185,6 +185,14 @@ Common issues:
 - **Item does not exist**: If a QID does not exist in the target environment (live or test), you must create it manually before adding claims.
 - **Rate limit / maxlag errors**: Pywikibot automatically handles retries when the server signals maxlag. No additional `time.sleep()` is required for standard batch sizes.
 
+## Learn more about RijksBot
+
+I've written a blog about the development, approval, and first batch execution of RijksBot. It explains how the bot adds Rijksmuseum IDs and related statements only when necessary.
+
+Read the full story here: [RijksBot-story.md](RijksBot-story.md)
+
+For a detailed walkthrough of the bot approval process, including testing, community review, and transclusion steps, see the document: [RijksBot – Wikidata Bot Approval Process](RijksBot_Wikidata_Approval_Process.md)
+##
 
 **Author:** Jeroen De Meester  
 **Repository:** [https://github.com/Jeroen-DeMeester/rijks-wikidata-bot](https://github.com/Jeroen-DeMeester/rijks-wikidata-bot)
